@@ -1,8 +1,6 @@
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
-from fastapi import APIRouter, HTTPException, Depends
-from sqlalchemy.orm import Session
 
 class CampaignBase(BaseModel):
     """Define como uma nova campanha deve ser representada"""
@@ -24,4 +22,8 @@ class CampaignInDB(CampaignBase):
     created_at: datetime = Field(..., example="2023-09-17T12:00:00", description="Data de criação da campanha")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class CampaignListResponse(BaseModel):
+    """Schema for campaign list responses"""
+    campaigns: List["CampaignInDB"] = Field(..., description="Lista de campanhas")

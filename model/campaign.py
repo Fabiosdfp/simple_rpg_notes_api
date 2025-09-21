@@ -1,14 +1,9 @@
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
-from datetime import datetime
-from typing import Union
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Text
+from datetime import datetime, timezone
 from sqlalchemy.orm import relationship
-from  model import Base
+from model import Base
 
-
-
-class Campaign(db.Model):
+class Campaign(Base):
     """
     Tabela de Campanhas - Representa uma campanha de RPG
     """
@@ -17,9 +12,9 @@ class Campaign(db.Model):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
     description = Column(Text, nullable=True)
-    created_at = Column(DateTime, nullable=False, default=datetime.now(datetime.timezone.utc))
+    created_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
 
-    notes = relationship('Note', backref='campaign', lazy=True, cascade='all, delete-orphan')
+    notes = relationship('Notes', backref='campaign', lazy=True, cascade='all, delete-orphan')
 
     def __init__(self, name, description=None):
         self.name = name

@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 import os
 from model.base import Base
-from model.campaign import Comment
+from model.campaign import Campaign  # Changed from Comment to Campaign
 from model.notes import Notes
 
 db_path = "database/"
