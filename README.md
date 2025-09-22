@@ -43,14 +43,12 @@ Abra o [http://localhost:5000/#/](http://localhost:5000/#/) no navegador para ve
 - `POST /campaigns` - Criar nova campanha
 - `GET /campaigns` - Listar todas as campanhas
 - `GET /campaigns/{id}` - Buscar campanha por ID
-- `DELETE /campaigns/{id}` - Remover campanha
 
 ### Notas
 - `POST /notes` - Criar nova nota
 - `GET /notes` - Listar todas as notas
 - `GET /notes/{id}` - Buscar nota por ID
 - `GET /campaigns/{id}/notes` - Listar notas de uma campanha
-- `DELETE /notes/{id}` - Remover nota
 
 ## Estrutura do Projeto
 
@@ -59,5 +57,7 @@ Abra o [http://localhost:5000/#/](http://localhost:5000/#/) no navegador para ve
 - `schemas.py` - Schemas Pydantic para validação
 - `logger.py` - Configuração de logs
 - `requirements.txt` - Dependências do projeto
+- `database.db` - Banco de dados SQLite (criado automaticamente)
+- `logs/` - Diretório de arquivos de log (criado automaticamente)
 - `database.db` - Banco de dados SQLite (criado automaticamente)
 - `logs/` - Diretório de arquivos de log (criado automaticamente)

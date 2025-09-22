@@ -25,9 +25,7 @@ class CampaignInDB(CampaignBase):
         from_attributes = True
 
 class CampaignListResponse(BaseModel):
-    """Schema para resposta em lista de campanhas"""
+    """Schema for campaign list responses"""
     campaigns: List["CampaignInDB"] = Field(..., description="Lista de campanhas")
 
-class CampaignPath(BaseModel):
-    """Schema para parâmetros de path da campanha"""
-    campaign_id: int = Field(..., description="ID da campanha", example=1)
+CampaignListResponse.update_forward_refs()

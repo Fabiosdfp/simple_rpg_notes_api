@@ -1,83 +1,41 @@
-[2025-09-21 20:08:08,203] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:08:08] "[35m[1mGET /campaigns HTTP/1.1[0m" 500 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:12:43,325] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:12:43] "[33mGET /campaigns/{campaign_id}/notes HTTP/1.1[0m" 404 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:13:00,566] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:13:00] "GET /notes HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:14:07,221] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:14:07] "[33mGET /campaigns/{campaign_id} HTTP/1.1[0m" 404 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:13:37,010] ERROR log_exception() L875  Exception on /campaigns [GET] - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py L875 
-Traceback (most recent call last):
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 920, in full_dispatch_request
-    return self.finalize_request(rv)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 939, in finalize_request
-    response = self.make_response(rv)
-               ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1231, in make_response
-    rv = self.json.response(rv)
-         ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/json/provider.py", line 214, in response
-    f"{self.dumps(obj, **dump_args)}\n", mimetype=self.mimetype
-       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/json/provider.py", line 179, in dumps
-    return json.dumps(obj, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/__init__.py", line 238, in dumps
-    **kw).encode(obj)
-          ^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/encoder.py", line 200, in encode
-    chunks = self.iterencode(o, _one_shot=True)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/json/encoder.py", line 258, in iterencode
-    return _iterencode(o, 0)
-           ^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/json/provider.py", line 121, in _default
-    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
-TypeError: Object of type CampaignInDB is not JSON serializable
-[2025-09-21 20:13:37,013] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:13:37] "[35m[1mGET /campaigns HTTP/1.1[0m" 500 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:15:55,613] ERROR log_exception() L875  Exception on /campaigns [POST] - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py L875 
-Traceback (most recent call last):
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 920, in full_dispatch_request
-    return self.finalize_request(rv)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 939, in finalize_request
-    response = self.make_response(rv)
-               ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1249, in make_response
-    raise TypeError(
-TypeError: The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a CampaignInDB.
-[2025-09-21 20:15:55,617] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:15:55] "[35m[1mPOST /campaigns HTTP/1.1[0m" 500 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:16:15,034] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:16:15] "[31m[1mPOST /campaigns HTTP/1.1[0m" 422 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:17:08,821] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:17:08] "[31m[1mPOST /campaigns HTTP/1.1[0m" 422 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:17:11,862] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:17:11] "[31m[1mPOST /campaigns HTTP/1.1[0m" 422 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:17:21,159] ERROR log_exception() L875  Exception on /campaigns [POST] - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py L875 
-Traceback (most recent call last):
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
-    response = self.full_dispatch_request()
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 920, in full_dispatch_request
-    return self.finalize_request(rv)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 939, in finalize_request
-    response = self.make_response(rv)
-               ^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1249, in make_response
-    raise TypeError(
-TypeError: The view function did not return a valid response. The return type must be a string, dict, list, tuple with headers or status, Response instance, or WSGI callable, but it was a CampaignInDB.
-[2025-09-21 20:17:21,162] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:17:21] "[35m[1mPOST /campaigns HTTP/1.1[0m" 500 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:39,046] INFO _log() L97   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+[2025-09-21 20:40:03,875] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:40:03] "[33mGET /campaigns/{campaign_id}/notes HTTP/1.1[0m" 404 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:40:51,054] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:40:51] "GET /campaigns HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:11,344] INFO _log() L97   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000 - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:39,047] INFO _log() L97   [33mPress CTRL+C to quit[0m - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:42,960] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:42] "[32mGET / HTTP/1.1[0m" 302 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,229] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "GET /openapi/ HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,363] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "[36mGET /openapi/redoc/images/redoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,657] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "[36mGET /openapi/scalar/images/scalar.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,658] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "[36mGET /openapi/rapidoc/images/rapidoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,660] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "[36mGET /openapi/swagger/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,662] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "[36mGET /openapi/rapipdf/images/rapipdf.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:43,666] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:43] "[36mGET /openapi/elements/images/elements.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:44,554] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:44] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
-[2025-09-21 20:23:44,812] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:23:44] "[36mGET /openapi/swagger/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:11,345] INFO _log() L97   [33mPress CTRL+C to quit[0m - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,056] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[32mGET / HTTP/1.1[0m" 302 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,319] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[32mGET /openapi HTTP/1.1[0m" 308 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,393] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "GET /openapi/ HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,648] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[36mGET /openapi/redoc/images/redoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,769] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[36mGET /openapi/rapipdf/images/rapipdf.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,788] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[36mGET /openapi/elements/images/elements.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,804] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[36mGET /openapi/rapidoc/images/rapidoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,807] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[36mGET /openapi/swagger/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:15,808] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:15] "[36mGET /openapi/scalar/images/scalar.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:16,942] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:16] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:17,223] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:17] "[36mGET /openapi/swagger/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:17,409] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:17] "[36mGET /openapi/swagger/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:17,410] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:17] "[36mGET /openapi/swagger/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:48:17,677] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:48:17] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:42,447] INFO _log() L97   [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000 - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:42,448] INFO _log() L97   [33mPress CTRL+C to quit[0m - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:46,310] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:46] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:46,581] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:46] "[36mGET /openapi/swagger/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:46,731] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:46] "[36mGET /openapi/swagger/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:46,732] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:46] "[36mGET /openapi/swagger/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:46,832] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:46] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:47,162] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:47] "[36mGET /openapi/swagger/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:55,712] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:55] "[32mGET / HTTP/1.1[0m" 302 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:55,981] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:55] "GET /openapi/ HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:56,086] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:56] "[36mGET /openapi/redoc/images/redoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:56,400] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:56] "[36mGET /openapi/elements/images/elements.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:56,402] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:56] "[36mGET /openapi/rapipdf/images/rapipdf.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:56,407] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:56] "[36mGET /openapi/rapidoc/images/rapidoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:56,414] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:56] "[36mGET /openapi/scalar/images/scalar.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:56,420] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:56] "[36mGET /openapi/swagger/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:57,374] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:57] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:57,632] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:57] "[36mGET /openapi/swagger/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:57,787] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:57] "[36mGET /openapi/swagger/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:57,803] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:57] "[36mGET /openapi/swagger/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:50:57,935] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:50:57] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  

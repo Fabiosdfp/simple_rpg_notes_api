@@ -1,0 +1,75 @@
+[2025-09-21 20:06:32,036] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:32] "[36mGET /openapi/redoc/images/redoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:32,349] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:32] "[36mGET /openapi/rapipdf/images/rapipdf.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:32,360] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:32] "[36mGET /openapi/elements/images/elements.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:32,365] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:32] "[36mGET /openapi/scalar/images/scalar.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:32,372] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:32] "[36mGET /openapi/rapidoc/images/rapidoc.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:32,375] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:32] "[36mGET /openapi/swagger/images/swagger.svg HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:07:11,143] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:07:11] "GET /openapi/swagger HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:33,793] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:33] "[36mGET /openapi/swagger/css/swagger-ui.css HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:33,933] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:33] "[36mGET /openapi/swagger/js/swagger-ui-bundle.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:33,943] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:33] "[36mGET /openapi/swagger/js/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:34,189] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:34] "GET /openapi/openapi.json HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:07:16,248] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:07:16] "[32mGET / HTTP/1.1[0m" 302 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:06:38,889] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:06:38] "GET /openapi/ HTTP/1.1" 200 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:07:00,011] ERROR log_exception() L875  Exception on /campaigns [GET] - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py L875 
+Traceback (most recent call last):
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask_openapi3/scaffold.py", line 123, in view_func
+    response = func(**func_kwargs)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/app.py", line 68, in list_campaigns
+    campaign_list = [CampaignInDB.model_validate(c) for c in campaigns]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/pydantic/main.py", line 705, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for CampaignInDB
+updated_at
+  Field required [type=missing, input_value=<Campaign 1: Campanha Épica>, input_type=Campaign]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+[2025-09-21 20:07:00,013] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:07:00] "[35m[1mGET /campaigns HTTP/1.1[0m" 500 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
+[2025-09-21 20:07:01,297] ERROR log_exception() L875  Exception on /campaigns [GET] - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py L875 
+Traceback (most recent call last):
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask_cors/extension.py", line 176, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+                                                ^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/flask_openapi3/scaffold.py", line 123, in view_func
+    response = func(**func_kwargs)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/app.py", line 68, in list_campaigns
+    campaign_list = [CampaignInDB.model_validate(c) for c in campaigns]
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/pydantic/main.py", line 705, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for CampaignInDB
+updated_at
+  Field required [type=missing, input_value=<Campaign 1: Campanha Épica>, input_type=Campaign]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+[2025-09-21 20:07:01,299] INFO _log() L97   127.0.0.1 - - [21/Sep/2025 20:07:01] "[35m[1mGET /campaigns HTTP/1.1[0m" 500 - - call_trace=/home/fabio/pucpos/projeto1/rpg_app_api/venv/lib/python3.12/site-packages/werkzeug/_internal.py L97  
