@@ -6,6 +6,9 @@ ENV/
 .env/
 venv*/
 env*/
+__pycache__/
+*.py[cod]
+*$py.class
 
 # Banco de dados
 *.db
@@ -74,3 +77,29 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py

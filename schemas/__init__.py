@@ -4,11 +4,9 @@ from .campaign import (
     CampaignUpdate,
     CampaignInDB,
 )
-
-from .notes import (
-    NoteBase,
+from .note import (
     NoteCreate,
-    NoteUpdate,
-    NoteInDB,
+    NoteResponse,
+    NotesSearchResponse
 )
-from .erro import ErrorSchema
+

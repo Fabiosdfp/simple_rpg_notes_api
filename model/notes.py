@@ -14,14 +14,14 @@ class Notes(Base):
     __tablename__ = 'notes'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
-    campaign_id = Column(Integer, ForeignKey('campaigns.id'), nullable=False)
+    campaign_name = Column(String(150), ForeignKey('campaigns.name'), nullable=False)
     title = Column(String(150), nullable=True)
     content = Column(Text, nullable=False)
     created_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc))
     updated_at = Column(DateTime, nullable=False, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
-    
-    def __init__(self, campaign_id, content, title=None):
-        self.campaign_id = campaign_id
+
+    def __init__(self, campaign_name, content, title=None):
+        self.campaign_name = campaign_name
         self.content = content
         self.title = title
     
@@ -32,7 +32,7 @@ class Notes(Base):
         """Converte o objeto para dicionário (útil para JSON)"""
         return {
             'id': self.id,
-            'campaign_id': self.campaign_id,
+            'campaign_name': self.campaign_name,
             'title': self.title,
             'content': self.content,
             'created_at': self.created_at.isoformat() if self.created_at else None,

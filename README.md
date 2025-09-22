@@ -42,13 +42,12 @@ Abra o [http://localhost:5000/#/](http://localhost:5000/#/) no navegador para ve
 ### Campanhas
 - `POST /campaigns` - Criar nova campanha
 - `GET /campaigns` - Listar todas as campanhas
-- `GET /campaigns/{id}` - Buscar campanha por ID
+- `GET /campaigns/{campaign_id}` - Buscar campanha por ID
 
 ### Notas
 - `POST /notes` - Criar nova nota
 - `GET /notes` - Listar todas as notas
-- `GET /notes/{id}` - Buscar nota por ID
-- `GET /campaigns/{id}/notes` - Listar notas de uma campanha
+- `GET /campaigns/{campaign_name}/notes` - Listar notas de uma campanha específica pelo nome
 
 ## Estrutura do Projeto
 
@@ -60,4 +59,5 @@ Abra o [http://localhost:5000/#/](http://localhost:5000/#/) no navegador para ve
 - `database.db` - Banco de dados SQLite (criado automaticamente)
 - `logs/` - Diretório de arquivos de log (criado automaticamente)
 - `database.db` - Banco de dados SQLite (criado automaticamente)
+- `logs/` - Diretório de arquivos de log (criado automaticamente)
 - `logs/` - Diretório de arquivos de log (criado automaticamente)

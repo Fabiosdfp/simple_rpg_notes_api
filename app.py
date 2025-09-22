@@ -11,7 +11,7 @@ try:
     from logger import logger
     from schemas.erro import ErrorSchema
     from schemas.campaign import CampaignPath, CampaignCreate, CampaignInDB
-    from schemas.note import NotePath, CampaignNotesPath, NoteCreate, NoteInDB, NoteListResponse
+    from schemas.note import NoteCreate, NoteResponse, NotesSearchResponse, CampaignNamePath
     from schemas import *
     print("All imports successful!")
 except ImportError as e:
@@ -19,7 +19,7 @@ except ImportError as e:
     traceback.print_exc()
     raise
 
-from flask_cors import CORS
+from flask_cors import CORS 
 
 info = Info(
     title="RPG App API",
@@ -129,44 +129,80 @@ def get_campaign(path: CampaignPath):
 
 # --- NOTAS (MENSAGENS) ---
 
-@app.post('/notes', tags=[note_tag], responses={"201": NoteInDB, "400": ErrorSchema})
+@app.post('/notes', tags=[note_tag], responses={"201": NoteResponse, "400": ErrorSchema, "404": ErrorSchema})
 def create_note(body: NoteCreate):
-    """Cria uma nova nota associada a uma campanha"""
+    """Cria uma nova nota para uma campanha"""
+    print(f"Received note data: {body}")
     session = Session()
     try:
         # Verifica se a campanha existe
-        campaign = session.query(Campaign).filter_by(id=body.campaign_id).first()
+        campaign = session.query(Campaign).filter_by(name=body.campaign_name).first()
         if not campaign:
-            return ErrorSchema(message="Campanha não encontrada.").model_dump(mode='json'), 400
+            return ErrorSchema(message=f"Campanha '{body.campaign_name}' não encontrada.").model_dump(mode='json'), 404
+        
+        # Cria a nota
         note = Notes(
-            campaign_id=body.campaign_id,
             title=body.title,
-            content=body.content
+            content=body.content,
+            campaign_name=campaign.name
         )
+        
         session.add(note)
         session.commit()
-        session.refresh(note)  # Atualiza para obter o ID gerado e timestamps
-        return NoteInDB.model_validate(note).model_dump(mode='json'), 201
+        session.refresh(note)
+        
+        # Prepara a resposta incluindo o nome da campanha
+        note_dict = {
+            'id': note.id,
+            'title': note.title,
+            'content': note.content,
+            'campaign_name': campaign.name,
+            'created_at': note.created_at,
+            'updated_at': note.updated_at
+        }
+        
+        result = NoteResponse.model_validate(note_dict)
+        return result.model_dump(mode='json'), 201
+        
     except IntegrityError as e:
         session.rollback()
-        logger.error(f"Erro de integridade ao criar nota: {e}")
+        print(f"Integrity error creating note: {e}")
         return ErrorSchema(message="Erro de integridade ao criar nota.").model_dump(mode='json'), 400
     except Exception as e:
         session.rollback()
-        logger.error(f"Erro inesperado ao criar nota: {e}")
+        print(f"Unexpected error creating note: {e}")
         traceback.print_exc()
         return ErrorSchema(message=f"Erro interno: {str(e)}").model_dump(mode='json'), 500
     finally:
         session.close()
 
-@app.get('/notes', tags=[note_tag])
-def list_notes():
-    """Lista todas as notas"""
+@app.get('/notes', tags=[note_tag], responses={"200": NotesSearchResponse, "400": ErrorSchema})
+def list_all_notes():
+    """Lista todas as notas de todas as campanhas"""
     session = Session()
     try:
-        notes = session.query(Notes).all()
-        result = [NoteInDB.model_validate(n).model_dump(mode='json') for n in notes]
-        return result
+        notes = session.query(Notes).join(Campaign).all()
+        
+        note_list = []
+        for note in notes:
+            note_dict = {
+                'id': note.id,
+                'title': note.title,
+                'content': note.content,
+                'campaign_name': note.campaign.name,
+                'created_at': note.created_at,
+                'updated_at': note.updated_at
+            }
+            note_list.append(NoteResponse.model_validate(note_dict).model_dump(mode='json'))
+        
+        response = NotesSearchResponse(
+            notes=note_list,
+            total=len(note_list),
+            campaign_name=None
+        )
+        
+        return response.model_dump(mode='json')
+        
     except Exception as e:
         print(f"Error listing notes: {e}")
         traceback.print_exc()
@@ -174,36 +210,49 @@ def list_notes():
     finally:
         session.close()
 
-@app.get('/notes/<int:note_id>', tags=[note_tag], responses={"200": NoteInDB, "404": ErrorSchema})
-def get_note(path: NotePath):
-    """Busca uma nota pelo ID"""
-    note_id = path.note_id
+@app.get('/campaigns/<string:campaign_name>/notes', tags=[note_tag], responses={"200": NotesSearchResponse, "404": ErrorSchema, "400": ErrorSchema})
+def list_notes_by_campaign(path: CampaignNamePath):
+    """Lista todas as notas de uma campanha específica pelo nome da campanha
+    
+    Args:
+        campaign_name: Nome da campanha para buscar as notas
+    """
+    # Decodifica o nome da campanha da URL
+    campaign_name = unquote(path.campaign_name)
+    
     session = Session()
     try:
-        note = session.query(Notes).filter_by(id=note_id).first()
-        if note:
-            return NoteInDB.model_validate(note).model_dump(mode='json')
-        return ErrorSchema(message="Nota não encontrada.").model_dump(mode='json'), 404
+        # Verifica se a campanha existe
+        campaign = session.query(Campaign).filter_by(name=campaign_name).first()
+        if not campaign:
+            return ErrorSchema(message=f"Campanha '{campaign_name}' não encontrada.").model_dump(mode='json'), 404
+        
+        # Busca todas as notas da campanha
+        notes = session.query(Notes).filter_by(campaign_name=campaign_name).all()
+        
+        # Converte as notas usando o método similar ao list_all_notes
+        note_list = []
+        for note in notes:
+            note_dict = {
+                'id': note.id,
+                'title': note.title,
+                'content': note.content,
+                'campaign_name': note.campaign_name,
+                'created_at': note.created_at,
+                'updated_at': note.updated_at
+            }
+            note_list.append(NoteResponse.model_validate(note_dict).model_dump(mode='json'))
+        
+        response = NotesSearchResponse(
+            notes=note_list,
+            total=len(note_list),
+            campaign_name=campaign_name
+        )
+        
+        return response.model_dump(mode='json')
+        
     except Exception as e:
-        print(f"Error getting note: {e}")
-        traceback.print_exc()
-        return ErrorSchema(message=f"Erro ao buscar nota: {str(e)}").model_dump(mode='json'), 500
-    finally:
-        session.close()
-
-@app.get('/campaigns/<int:campaign_id>/notes', tags=[note_tag], responses={"200": NoteListResponse, "404": ErrorSchema})
-def list_notes_by_campaign(path: CampaignNotesPath):
-    """Lista todas as notas de uma campanha específica"""
-    campaign_id = path.campaign_id
-    session = Session()
-    try:
-        notes = session.query(Notes).filter_by(campaign_id=campaign_id).all()
-        if notes:
-            note_list = [NoteInDB.model_validate(n).model_dump(mode='json') for n in notes]
-            return {"notes": note_list}
-        return ErrorSchema(message="Nenhuma nota encontrada para esta campanha.").model_dump(mode='json'), 404
-    except Exception as e:
-        print(f"Error listing notes by campaign: {e}")
+        print(f"Error listing notes for campaign '{campaign_name}': {e}")
         traceback.print_exc()
         return ErrorSchema(message=f"Erro ao listar notas da campanha: {str(e)}").model_dump(mode='json'), 500
     finally:

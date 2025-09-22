@@ -2,32 +2,49 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime
 
-class NotePath(BaseModel):
-    """Schema para parâmetros de path da nota"""
-    note_id: int = Field(..., description="ID da nota", example=1)
-
-class CampaignNotesPath(BaseModel):
-    """Schema para parâmetros de path das notas de uma campanha"""
-    campaign_id: int = Field(..., description="ID da campanha", example=1)
 
 class NoteCreate(BaseModel):
-    """Schema para criação de nota"""
-    campaign_id: int = Field(..., description="ID da campanha associada", example=1)
-    title: str = Field(..., description="Título da nota", example="Sessão 1 - Início da aventura")
-    content: str = Field(..., description="Conteúdo da nota", example="Os heróis se encontraram na taverna...")
+    title: str = Field(..., min_length=1, max_length=200, description="Título da nota")
+    content: str = Field(..., min_length=1, description="Conteúdo da nota")
+    campaign_name: str = Field(..., min_length=1, max_length=100, description="Nome da campanha")
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "title": "A Busca pelo Cristal Perdido",
+                "content": "Os aventureiros encontraram um dragão antigo na caverna...",
+                "campaign_name": "Campanha Épica"
+            }
+        }
 
-class NoteInDB(BaseModel):
-    """Schema para nota retornada do banco"""
-    id: int = Field(..., description="ID único da nota")
-    campaign_id: int = Field(..., description="ID da campanha associada")
-    title: str = Field(..., description="Título da nota")
-    content: str = Field(..., description="Conteúdo da nota")
-    created_at: datetime = Field(..., description="Data de criação")
-    updated_at: datetime = Field(..., description="Data da última atualização")
+
+class NoteResponse(BaseModel):
+    id: int
+    title: str
+    content: str
+    campaign_name: str
+    created_at: datetime
+    updated_at: Optional[datetime] = None
     
     class Config:
         from_attributes = True
 
-class NoteListResponse(BaseModel):
-    """Schema para resposta com lista de notas"""
-    notes: List[NoteInDB] = Field(..., description="Lista de notas")
+
+class CampaignNamePath(BaseModel):
+    campaign_name: str = Field(..., description="Nome da campanha")
+
+
+class NotesSearchResponse(BaseModel):
+    notes: List[NoteResponse]
+    total: int
+    campaign_name: Optional[str] = None
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "notes": [],
+                "total": 0,
+                "campaign_name": "Campanha Épica"
+            }
+        }
+
