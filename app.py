@@ -1,12 +1,22 @@
 from flask_openapi3 import OpenAPI, Info, Tag
 from flask import redirect
 from urllib.parse import unquote
+import traceback
 
 from sqlalchemy.exc import IntegrityError
 
-from model import Session, Campaign, Notes
-from logger import logger
-from schemas import *
+# Garante que o modelo e a sessão sejam importados corretamente
+try:
+    from model import Session, Campaign, Notes
+    from logger import logger
+    from schemas.erro import ErrorSchema
+    from schemas import *
+    print("All imports successful!")
+except ImportError as e:
+    print(f"Import error: {e}")
+    traceback.print_exc()
+    raise
+
 from flask_cors import CORS
 
 info = Info(
@@ -16,6 +26,13 @@ info = Info(
 )
 app = OpenAPI(__name__, info=info)
 CORS(app)
+
+# Debugging
+@app.errorhandler(500)
+def internal_error(error):
+    print(f"Internal error: {error}")
+    traceback.print_exc()
+    return {"error": "Internal server error", "details": str(error)}, 500
 
 # definindo tags
 home_tag = Tag(
@@ -41,22 +58,34 @@ def home():
     """
     return redirect('/openapi')
 
-
-
 # --- CAMPANHAS ---
 
 @app.post('/campaigns', tags=[campaign_tag], responses={"201": CampaignInDB, "400": ErrorSchema})
 def create_campaign(body: CampaignCreate):
     """Cria uma nova campanha de RPG"""
+    print(f"Received data: {body}")
     session = Session()
     try:
         campaign = Campaign(name=body.name, description=body.description)
+        print(f"Created campaign object: {campaign}")
         session.add(campaign)
         session.commit()
-        return CampaignInDB.model_validate(campaign), 201
-    except IntegrityError:
+        session.refresh(campaign)  
+        print(f"Campaign saved: {campaign}")
+        result = CampaignInDB.model_validate(campaign)
+        print(f"Validated result: {result}")
+        return result.model_dump(mode='json'), 201
+    except IntegrityError as e:
         session.rollback()
-        return ErrorSchema(message="Erro de integridade ao criar campanha."), 400
+        print(f"Integrity error creating campaign: {e}")
+        logger.error(f"Integrity error creating campaign: {e}")
+        return ErrorSchema(message="Erro de integridade ao criar campanha.").model_dump(mode='json'), 400
+    except Exception as e:
+        session.rollback()
+        print(f"Unexpected error creating campaign: {e}")
+        traceback.print_exc()
+        logger.error(f"Unexpected error creating campaign: {e}")
+        return ErrorSchema(message=f"Erro interno: {str(e)}").model_dump(mode='json'), 500
     finally:
         session.close()
 
@@ -64,20 +93,19 @@ def create_campaign(body: CampaignCreate):
 def list_campaigns():
     """Lista todas as campanhas"""
     session = Session()
-    campaigns = session.query(Campaign).all()
-    campaign_list = [CampaignInDB.model_validate(c) for c in campaigns]
-    session.close()
-    return campaign_list
+    try:
+        campaigns = session.query(Campaign).all()
+        campaign_list = [CampaignInDB.model_validate(c).model_dump(mode='json') for c in campaigns]
+        return campaign_list
+    except Exception as e:
+        print(f"Error listing campaigns: {e}")
+        traceback.print_exc()
+        return ErrorSchema(message=f"Erro ao listar campanhas: {str(e)}").model_dump(mode='json'), 500
+    finally:
+        session.close()
 
-@app.get('/campaigns/<int:campaign_id>', tags=[campaign_tag], responses={"200": CampaignInDB, "404": ErrorSchema})
-def get_campaign(campaign_id: int):
-    """Busca uma campanha pelo ID"""
-    session = Session()
-    campaign = session.query(Campaign).filter_by(id=campaign_id).first()
-    session.close()
-    if campaign:
-        return CampaignInDB.model_validate(campaign)
-    return ErrorSchema(message="Campanha não encontrada."), 404
+
+
 
 # --- NOTAS (MENSAGENS) ---
 
@@ -89,7 +117,7 @@ def create_note(body: NoteCreate):
         # Verifica se a campanha existe
         campaign = session.query(Campaign).filter_by(id=body.campaign_id).first()
         if not campaign:
-            return ErrorSchema(message="Campanha não encontrada."), 400
+            return ErrorSchema(message="Campanha não encontrada.").model_dump(mode='json'), 400
         note = Notes(
             campaign_id=body.campaign_id,
             title=body.title,
@@ -97,10 +125,17 @@ def create_note(body: NoteCreate):
         )
         session.add(note)
         session.commit()
-        return NoteInDB.model_validate(note), 201
-    except IntegrityError:
+        session.refresh(note)  # Refresh to get the generated ID and timestamps
+        return NoteInDB.model_validate(note).model_dump(mode='json'), 201
+    except IntegrityError as e:
         session.rollback()
-        return ErrorSchema(message="Erro de integridade ao criar nota."), 400
+        logger.error(f"Integrity error creating note: {e}")
+        return ErrorSchema(message="Erro de integridade ao criar nota.").model_dump(mode='json'), 400
+    except Exception as e:
+        session.rollback()
+        logger.error(f"Unexpected error creating note: {e}")
+        traceback.print_exc()
+        return ErrorSchema(message=f"Erro interno: {str(e)}").model_dump(mode='json'), 500
     finally:
         session.close()
 
@@ -108,10 +143,16 @@ def create_note(body: NoteCreate):
 def list_notes():
     """Lista todas as notas"""
     session = Session()
-    notes = session.query(Notes).all()
-    result = [NoteInDB.model_validate(n) for n in notes]
-    session.close()
-    return result
+    try:
+        notes = session.query(Notes).all()
+        result = [NoteInDB.model_validate(n).model_dump(mode='json') for n in notes]
+        return result
+    except Exception as e:
+        print(f"Error listing notes: {e}")
+        traceback.print_exc()
+        return ErrorSchema(message=f"Erro ao listar notas: {str(e)}").model_dump(mode='json'), 500
+    finally:
+        session.close()
 
 @app.get('/notes/<int:note_id>', tags=[note_tag], responses={"200": NoteInDB, "404": ErrorSchema})
 def get_note(note_id: int):
@@ -120,8 +161,8 @@ def get_note(note_id: int):
     note = session.query(Notes).filter_by(id=note_id).first()
     session.close()
     if note:
-        return NoteInDB.model_validate(note)
-    return ErrorSchema(message="Nota não encontrada."), 404
+        return NoteInDB.model_validate(note).model_dump(mode='json')
+    return ErrorSchema(message="Nota não encontrada.").model_dump(mode='json'), 404
 
 @app.get('/campaigns/<int:campaign_id>/notes', tags=[note_tag], responses={"404": ErrorSchema})
 def list_notes_by_campaign(campaign_id: int):
@@ -130,33 +171,6 @@ def list_notes_by_campaign(campaign_id: int):
     notes = session.query(Notes).filter_by(campaign_id=campaign_id).all()
     session.close()
     if notes:
-        return [NoteInDB.model_validate(n) for n in notes]
-    return ErrorSchema(message="Nenhuma nota encontrada para esta campanha."), 404
+        return [NoteInDB.model_validate(n).model_dump(mode='json') for n in notes]
+    return ErrorSchema(message="Nenhuma nota encontrada para esta campanha.").model_dump(mode='json'), 404
 
-# --- EXTRAS ÚTEIS ---
-
-@app.delete('/campaigns/<int:campaign_id>', tags=[campaign_tag], responses={"404": ErrorSchema})
-def delete_campaign(campaign_id: int):
-    """Remove uma campanha pelo ID"""
-    session = Session()
-    campaign = session.query(Campaign).filter_by(id=campaign_id).first()
-    if not campaign:
-        session.close()
-        return ErrorSchema(message="Campanha não encontrada."), 404
-    session.delete(campaign)
-    session.commit()
-    session.close()
-    return {"message": "Campanha removida com sucesso."}
-
-@app.delete('/notes/<int:note_id>', tags=[note_tag], responses={"404": ErrorSchema})
-def delete_note(note_id: int):
-    """Remove uma nota pelo ID"""
-    session = Session()
-    note = session.query(Notes).filter_by(id=note_id).first()
-    if not note:
-        session.close()
-        return ErrorSchema(message="Nota não encontrada."), 404
-    session.delete(note)
-    session.commit()
-    session.close()
-    return {"message": "Nota removida com sucesso."}
